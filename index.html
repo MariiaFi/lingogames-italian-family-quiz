@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi è chi? — Итальянская семья</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Заставка -->
+        <div id="start-screen" class="screen active">
+            <div class="header">
+                <h1><i class="fas fa-people-group"></i> Chi è chi?</h1>
+                <p class="subtitle">Угадай, кто есть кто в итальянской семье!</p>
+            </div>
+            
+            <div class="family-illustration">
+                <div class="family-tree">
+                    <div class="person nonna">👵</div>
+                    <div class="person nonno">👴</div>
+                    <div class="connector"></div>
+                    <div class="person padre">👨</div>
+                    <div class="person madre">👩</div>
+                    <div class="connector-horizontal"></div>
+                    <div class="person figlio">👦</div>
+                    <div class="person figlia">👧</div>
+                </div>
+            </div>
+            
+            <div class="instructions">
+                <h2><i class="fas fa-gamepad"></i> Как играть</h2>
+                <ul>
+                    <li><i class="fas fa-check-circle"></i> Читай описание на итальянском</li>
+                    <li><i class="fas fa-mouse-pointer"></i> Выбирай правильный ответ из 4 вариантов</li>
+                    <li><i class="fas fa-brain"></i> Учи итальянские слова для членов семьи</li>
+                    <li><i class="fas fa-star"></i> Набери максимальное количество очков!</li>
+                </ul>
+                
+                <div class="difficulty-selector">
+                    <p>Выбери сложность:</p>
+                    <div class="difficulty-buttons">
+                        <button class="difficulty-btn active" data-difficulty="easy">Лёгкая</button>
+                        <button class="difficulty-btn" data-difficulty="medium">Средняя</button>
+                        <button class="difficulty-btn" data-difficulty="hard">Сложная</button>
+                    </div>
+                </div>
+            </div>
+            
+            <button id="start-btn" class="btn-primary">
+                <i class="fas fa-play"></i> Начать игру
+            </button>
+            
+            <div class="language-note">
+                <p><i class="fas fa-lightbulb"></i> Все вопросы на итальянском, интерфейс на русском</p>
+            </div>
+        </div>
+        
+        <!-- Игровой экран -->
+        <div id="game-screen" class="screen">
+            <div class="game-header">
+                <div class="score-display">
+                    <span class="score-label">Счёт:</span>
+                    <span id="score">0</span>/<span id="total-questions">20</span>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div id="progress-fill" class="progress-fill"></div>
+                    </div>
+                    <div id="progress-text" class="progress-text">Вопрос 1 из 20</div>
+                </div>
+                
+                <button id="hint-btn" class="btn-hint">
+                    <i class="fas fa-lightbulb"></i> Подсказка
+                </button>
+            </div>
+            
+            <div class="question-container">
+                <div class="question-header">
+                    <h2><i class="fas fa-question-circle"></i> Кто это?</h2>
+                </div>
+                
+                <div id="question-text" class="question-text">
+                    Загрузка вопроса...
+                </div>
+                
+                <div class="options-container" id="options-container">
+                    <!-- Варианты ответов будут добавлены через JS -->
+                </div>
+                
+                <div id="feedback" class="feedback">
+                    <!-- Обратная связь будет показана здесь -->
+                </div>
+            </div>
+            
+            <div class="navigation">
+                <button id="next-btn" class="btn-secondary" disabled>
+                    <i class="fas fa-arrow-right"></i> Следующий вопрос
+                </button>
+                
+                <button id="quit-btn" class="btn-secondary">
+                    <i class="fas fa-home"></i> В меню
+                </button>
+            </div>
+        </div>
+        
+        <!-- Экран результатов -->
+        <div id="result-screen" class="screen">
+            <div class="result-header">
+                <h1><i class="fas fa-trophy"></i> Результаты</h1>
+                <div id="result-emoji" class="result-emoji">🎉</div>
+            </div>
+            
+            <div class="score-card">
+                <div class="score-circle">
+                    <span id="final-score">0</span>/<span id="final-total">20</span>
+                </div>
+                <div id="result-message" class="result-message">
+                    Отличный результат!
+                </div>
+                
+                <div class="accuracy">
+                    <p>Правильных ответов: <span id="correct-count">0</span></p>
+                    <p>Неправильных ответов: <span id="incorrect-count">0</span></p>
+                    <p>Точность: <span id="accuracy">0%</span></p>
+                </div>
+            </div>
+            
+            <div class="restart-options">
+                <button id="restart-btn" class="btn-primary">
+                    <i class="fas fa-redo"></i> Пройти заново
+                </button>
+                
+                <button id="menu-btn" class="btn-secondary">
+                    <i class="fas fa-home"></i> В главное меню
+                </button>
+            </div>
+            
+            <div class="share-result">
+                <p>Поделись результатом:</p>
+                <div class="share-buttons">
+                    <button class="share-btn">
+                        <i class="fab fa-twitter"></i>
+                    </button>
+                    <button class="share-btn">
+                        <i class="fab fa-facebook"></i>
+                    </button>
+                    <button class="share-btn" id="copy-result">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Подсказка -->
+        <div id="hint-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3><i class="fas fa-lightbulb"></i> Подсказка</h3>
+                    <button id="close-hint" class="close-btn">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div id="hint-content">
+                        <!-- Содержимое подсказки будет добавлено через JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Игра для изучения итальянской лексики семьи | Сделано с <i class="fas fa-heart"></i> для изучающих итальянский</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
